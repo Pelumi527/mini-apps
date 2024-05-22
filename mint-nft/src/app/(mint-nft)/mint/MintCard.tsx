@@ -9,9 +9,9 @@ import useSWR from "swr";
 
 // <!-- smart contract
 
-import { DAPP_ADDRESS, APTOS_NODE_URL} from '../../../config/constants';
+import { DAPP_ADDRESS, APTOS_NODE_URL } from "../../../config/constants";
 import { Provider, Types, Network } from "aptos";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet, InputTransactionData } from "@aptos-labs/wallet-adapter-react";
 // --!>
 
 type MintType = "cool-list" | "public-mint";
@@ -29,11 +29,12 @@ export interface MintInProgressCardProps extends MintCardProps {
 }
 const CardLoading = () => {
   return (
-    <div className="flex h-20 w-full items-center justify-center">
+    <div className="flex items-center justify-center w-full h-20">
       <span className="loading loading-spinner loading-md" />
     </div>
   );
 };
+
 const CardLoadingError = () => {
   return (
     <div
@@ -61,7 +62,7 @@ export const MintCard: React.FC<{
     }
     console.log(data);
     const propsData = {
-      eligible,  // Use the eligible passed from props
+      eligible, // Use the eligible passed from props
       mintName: "Cool List",
       mintPrice: "4.2",
       mintable: "-",
@@ -110,8 +111,8 @@ const MintInprogressCard: React.FC<MintInProgressCardProps> = ({
   };
   return (
     <div>
-      <div className="flex flex-col items-center justify-center rounded-t-xl  border-2 border-b-0 border-black bg-bgpink px-4 py-2">
-        <div className="flex w-full items-center justify-between">
+      <div className="flex flex-col items-center justify-center px-4 py-2 border-2 border-b-0 border-black rounded-t-xl bg-bgpink">
+        <div className="flex items-center justify-between w-full">
           <span className="font-bold text-white">{mintName}</span>
           <span
             className={
@@ -139,7 +140,7 @@ const MintInprogressCard: React.FC<MintInProgressCardProps> = ({
                 <span className="mt-8 text-2xl font-semibold text-white">
                   WELL DONE!
                 </span>
-                <p className="mb-5 mt-3 px-5 text-center text-base font-light text-white">
+                <p className="px-5 mt-3 mb-5 text-base font-light text-center text-white">
                   You've successfully minted all available Slothsballs. Prepare
                   for the upcoming evolution phase.You'll be notified when it's
                   time to proceed.
@@ -151,7 +152,7 @@ const MintInprogressCard: React.FC<MintInProgressCardProps> = ({
               />
             )
           ) : (
-            <span className="mb-5 mt-7 text-2xl font-semibold text-white">
+            <span className="mb-5 text-2xl font-semibold text-white mt-7">
               Minting is LIVE
             </span>
           )
@@ -159,7 +160,7 @@ const MintInprogressCard: React.FC<MintInProgressCardProps> = ({
           <CountDownCard cardName="Mint date" startTime={mintTime} />
         )}
       </div>
-      <div className="rounded-b-xl border-2 border-b-4 border-t-0 border-black bg-white px-4 py-5 text-slate-600">
+      <div className="px-4 py-5 bg-white border-2 border-t-0 border-b-4 border-black rounded-b-xl text-slate-600">
         <div className="flex items-center justify-between">
           <span className="font-semibold">Mint price</span>
           <span className="font-black">{mintPrice || "-"} APT</span>
@@ -181,7 +182,7 @@ const MintStartCard: React.FC<MintCardProps> = ({ mintName, mintTime }) => {
   const mintTimeFormat = getStartTime(mintTime);
 
   return (
-    <div className="mt-3 flex h-20 items-center justify-between rounded-xl border-2 border-b-4 border-black bg-bgpink px-4 py-2 text-fgpink">
+    <div className="flex items-center justify-between h-20 px-4 py-2 mt-3 border-2 border-b-4 border-black rounded-xl bg-bgpink text-fgpink">
       <span className="text-lg font-bold">{mintName}</span>
       <span>{mintTimeFormat}</span>
     </div>
@@ -190,7 +191,7 @@ const MintStartCard: React.FC<MintCardProps> = ({ mintName, mintTime }) => {
 
 const MintCompletedCard: React.FC<MintCardProps> = ({ mintName }) => {
   return (
-    <div className="mt-3 flex h-20 items-center justify-between rounded-xl border-2 border-b-4 border-black bg-bgpink px-4 py-2 text-white">
+    <div className="flex items-center justify-between h-20 px-4 py-2 mt-3 text-white border-2 border-b-4 border-black rounded-xl bg-bgpink">
       <span className="text-lg font-bold">{mintName}</span>
       <span>MINTING IS OVER</span>
     </div>
@@ -203,9 +204,9 @@ export const CountDownCard: React.FC<{
 }> = ({ bgcolor = "bg-black", startTime, cardName }) => {
   const startTimeFormat = getStartTime(startTime);
   return (
-    <div className="mb-5 flex w-full flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full mb-5">
       <h1 className="text-lg font-bold text-white">{cardName}</h1>
-      <span className="mb-7 text-lg font-light text-white">
+      <span className="text-lg font-light text-white mb-7">
         {startTimeFormat}
       </span>
       <CountDown deadlineTime={startTime} bgcolor={bgcolor} />
@@ -219,14 +220,17 @@ const MintButtonCard: React.FC<{
   const [mintAmount, setMintAmount] = useState(0);
 
   // <!-- smart contract
-  const {signAndSubmitTransaction} = useWallet();
+  const { signAndSubmitTransaction, account } = useWallet();
 
-  async function mintNFT(amount) {
-    const transaction = {
+  async function mintNFT(amount: string) {
+    const transaction:InputTransactionData = {
+      sender: ,
       data: {
         function: `0x541dee79b366288d5c2313377941d3bb6f58f6436b0f943bb7fb0689ca60d641::pre_mint::mint_sloth_ball`,
-        typeArguments: ["0x541dee79b366288d5c2313377941d3bb6f58f6436b0f943bb7fb0689ca60d641::pre_mint::CoolListInfo"],
-        functionArguments: [amount]
+        typeArguments: [
+          "0x541dee79b366288d5c2313377941d3bb6f58f6436b0f943bb7fb0689ca60d641::pre_mint::CoolListInfo",
+        ],
+        functionArguments: [amount],
       },
     };
 
@@ -236,7 +240,7 @@ const MintButtonCard: React.FC<{
 
   return (
     <>
-      <div className="mt-3 flex w-full items-center justify-center">
+      <div className="flex items-center justify-center w-full mt-3">
         <Button
           onClick={() => {
             setMintAmount(mintAmount - 1);
@@ -247,7 +251,7 @@ const MintButtonCard: React.FC<{
         >
           <MinusOutlined />
         </Button>
-        <span className="mx-8 inline-block font-bold text-white">
+        <span className="inline-block mx-8 font-bold text-white">
           {mintAmount}
         </span>
         <Button
@@ -261,8 +265,8 @@ const MintButtonCard: React.FC<{
         </Button>
       </div>
       <Button
-        onClick={() => mintNFT(mintAmount)}
-        className="my-8 w-full"
+        onClick={() => mintNFT(String(mintAmount))}
+        className="w-full my-8"
         variant="secondary"
       >
         Mint

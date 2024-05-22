@@ -24,6 +24,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@rainbow-me/rainbowkit": "^2.0.1",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@rise-wallet/wallet-adapter": "^0.1.2",
     "@solana/web3.js": "^1.66.2",
     "@supabase/supabase-js": "^1.35.6",
@@ -46,6 +47,7 @@
     "gsap": "^3.12.5",
     "lucide-react": "^0.374.0",
     "mime": "^3.0.0",
+    "mobile-detect": "^1.4.5",
     "mongodb": "^4.9.0",
     "msafe-plugin-wallet-adapter": "0.1.0",
     "next": "14.2.3",
@@ -66,12 +68,13 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "tweetnacl": "^1.0.3",
     "viem": "2.x"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
-    "@types/react": "18.0.9",
-    "@types/react-dom": "18.0.5",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "autoprefixer": "^10.4.7",
@@ -87,11 +90,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.8.3",
-    "postcss": "^8.4.14",
+    "postcss": "8.4.28",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.1.2",
-    "typescript": "^5.4.5",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6",
     "vercel": "^28.15.1"
   }
 }

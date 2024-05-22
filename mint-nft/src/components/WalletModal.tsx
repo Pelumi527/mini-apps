@@ -26,11 +26,11 @@ export function WalletModal() {
           className={modalState.walletModal ? 'modal modal-open cursor-point' : 'modal cursor-pointer'}>
           <div className="modal-box">
             <label
-              className="btn btn-sm btn-circle absolute right-2 top-2"
+              className="absolute btn btn-sm btn-circle right-2 top-2"
               onClick={() => setModalState({ ...modalState, walletModal: false })}>
               ✕
             </label>
-            <div className="mt-6  flex flex-col">{content}</div>
+            <div className="flex flex-col mt-6">{content}</div>
           </div>
         </label>
       </>
@@ -48,7 +48,7 @@ export function WalletModal() {
             }}>
             Account: {account!.address!.toString()}
           </p>
-          <button className="btn mt-5" onClick={disconnectWallet}>
+          <button className="mt-5 btn" onClick={disconnectWallet}>
             Disconnect
           </button>
         </>
@@ -61,7 +61,7 @@ export function WalletModal() {
                 key={i}
                 className={i == wallets.length - 1 ? 'btn gap-2' : 'btn gap-2 mb-5'}
                 onClick={() => connectWallet(wallet)}>
-                <Image width={25} height={25} src={wallet.adapter.icon} />
+                <Image width={25} height={25} src={wallet.adapter.icon} alt='wallet-logo' />
                 {wallet.adapter.name}
               </button>
             );
