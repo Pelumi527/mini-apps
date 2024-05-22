@@ -224,7 +224,7 @@ const MintButtonCard: React.FC<{
 
   async function mintNFT(amount: string) {
     const transaction:InputTransactionData = {
-      sender: ,
+      sender: "",
       data: {
         function: `0x541dee79b366288d5c2313377941d3bb6f58f6436b0f943bb7fb0689ca60d641::pre_mint::mint_sloth_ball`,
         typeArguments: [
